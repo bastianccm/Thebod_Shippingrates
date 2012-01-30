@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <models>
+            <shippingrates>
+                <class>Thebod_Shippingrates_Model</class>
+            </shippingrates>
+        </models>
+
+        <helpers>
+            <shippingrates>
+                <class>Thebod_Shippingrates_Helper</class>
+            </shippingrates>
+        </helpers>
+
+        <blocks>
+            <shippingrates>
+                <class>Thebod_Shippingrates_Block</class>
+            </shippingrates>
+        </blocks>
+
+         <events>
+            <checkout_type_onepage_save_order_after>
+                <observers>
+                    <shippingrates>
+                        <type>singleton</type>
+                        <class>shippingrates/observer</class>
+                        <method>checkout_type_onepage_save_order_after</method>
+                    </shippingrates>
+                </observers>
+            </checkout_type_onepage_save_order_after>
+        </events>
+    </global>
+
+    <default>
+        <carriers>
+            <shippingrates>
+                <active>1</active>
+                <model>shippingrates/carrier</model>
+                <title>Shippingrates</title>
+            </shippingrates>
+        </carriers>
+    </default>
+</config>
