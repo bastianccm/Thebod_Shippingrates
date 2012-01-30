@@ -2,7 +2,7 @@ Thebod_Shippingrates
 
 Simple configurable shippingrates for Magento.
 
-This simple module let you define as many shipping methods as you need, with an optional 'notification e-mail'.
+This simple module lets you define as many shipping methods as you need, with an optional 'notification e-mail'.
 Very useful for 'pickup-at-store' or if you need a few self-specified fixed rates shipping methods.
 
 German translation will come soon!
