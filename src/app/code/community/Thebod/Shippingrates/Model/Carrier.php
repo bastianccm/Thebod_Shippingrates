@@ -49,7 +49,49 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
      * @return boolean
      */
     public function checkRate(array $rate, Mage_Shipping_Model_Rate_Request $request) {
-        return true;
+        $filter = explode(';', $rate['filter']);
+        $passed = true;
+        foreach($filter as $f) {
+            list($condition, $value) = explode(':', $f);
+            switch($condition) {
+                case 'min_qty':
+                    if($request->getPackageQty() < $value) {
+                        $passed = false;
+                    }
+                    break;
+
+                case 'max_qty':
+                    if($request->getPackageQty() > $value) {
+                        $passed = false;
+                    }
+                    break;
+
+                case 'min_subtotal':
+                    if($request->getOrderSubtotal() < $value) {
+                        $passed = false;
+                    }
+                    break;
+
+                case 'max_subtotal':
+                    if($request->getOrderSubtotal() > $value) {
+                        $passed = false;
+                    }
+                    break;
+
+                case 'min_weight':
+                    if($request->getPackageWeight() < $value) {
+                        $passed = false;
+                    }
+                    break;
+
+                case 'max_weight':
+                    if($request->getPackageWeight() > $value) {
+                        $passed = false;
+                    }
+                    break;
+            }
+        }
+        return $passed;
     }
 
     /**
