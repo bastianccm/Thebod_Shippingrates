@@ -32,6 +32,18 @@
         </events>
     </global>
 
+    <adminhtml>
+        <translate>
+            <modules>
+                <Thebod_Shippingrates>
+                    <files>
+                        <default>Thebod_Shippingrates.csv</default>
+                    </files>
+                </Thebod_Shippingrates>
+            </modules>
+        </translate>
+    </adminhtml>
+
     <default>
         <carriers>
             <shippingrates>
