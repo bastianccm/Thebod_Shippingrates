@@ -49,10 +49,25 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
      * @return boolean
      */
     public function checkRate(array $rate, Mage_Shipping_Model_Rate_Request $request) {
+        if(!Mage::getSingleton('checkout/session')->hasQuote()) {
+            return true;
+        }
+
+        if(!isset($rate['filter'])) {
+            return true;
+        }
+
         $filter = explode(';', $rate['filter']);
         $passed = true;
         foreach($filter as $f) {
-            list($condition, $value) = explode(':', $f);
+            $f = explode(':', $f);
+            $condition = $f[0];
+            $value = isset($f[1]) && $f[1] ? $f[1] : false;
+
+            if($value === false) {
+                continue;
+            }
+
             switch($condition) {
                 case 'min_qty':
                     if($request->getPackageQty() < $value) {
@@ -67,13 +82,17 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                     break;
 
                 case 'min_subtotal':
-                    if($request->getOrderSubtotal() < $value) {
+                    Mage::getSingleton('checkout/session')->getQuote()->collectTotals();
+                    $subtotal = Mage::getSingleton('checkout/session')->getQuote()->getSubtotal();
+                    if($subtotal < $value) {
                         $passed = false;
                     }
                     break;
 
                 case 'max_subtotal':
-                    if($request->getOrderSubtotal() > $value) {
+                    Mage::getSingleton('checkout/session')->getQuote()->collectTotals();
+                    $subtotal = Mage::getSingleton('checkout/session')->getQuote()->getSubtotal();
+                    if($subtotal > $value) {
                         $passed = false;
                     }
                     break;
@@ -161,6 +180,7 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
         foreach($methods as $method) {
             $code = trim($method['code']);
             $price = trim($method['price']);
+            $filter = trim($method['filter']);
             $title = nl2br(trim($method['description']));
 
             $title = str_replace(array('=>', '<='), array('<strong>', '</strong>'), $title);
@@ -169,6 +189,7 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                 'code' => $code,
                 'title' => $title,
                 'price' => $price,
+                'filter' => $filter,
             );
         }
 
