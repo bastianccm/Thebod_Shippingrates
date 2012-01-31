@@ -86,7 +86,7 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
                 </tr>
                 </table>
                 <div style="text-align: right;">
-                    <button onclick="shippingconfig_filter_hide()" type="button">' . $this->__('Save filter') . '</button>
+                    <button onclick="shippingconfig_filter_hide()" type="button">' . $this->__('save filter') . '</button>
                 </div>
                 </div>
             </div>';

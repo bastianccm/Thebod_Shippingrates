@@ -12,4 +12,11 @@
 "price","Preis"
 "description","Beschreibung"
 "notification mail (optional)","Benachrichtigungs E-Mail (Optional)"
-
+"configure filter","Konfiguriere Filter"
+"min. QTY:","min. Menge"
+"max. QTY:","max. Menge"
+"min. subtotal","min. Bestellwert"
+"max. subtotal","max. Bestellwert"
+"min. weight","min. Gewicht"
+"max. weight","max. Gewicht"
+"save filter","Filter speichern"
