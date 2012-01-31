@@ -42,6 +42,17 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
     }
 
     /**
+     * applies filters for rate on request
+     *
+     * @param array $rate
+     * @param Mage_Shipping_Model_Rate_Request $request
+     * @return boolean
+     */
+    public function checkRate(array $rate, Mage_Shipping_Model_Rate_Request $request) {
+        return true;
+    }
+
+    /**
      * collect shipping rates
      *
      * @param Mage_Shipping_Model_Rate_Request $request
@@ -58,18 +69,20 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
         $rates = $this->getRate($this->getConfigData('shippingconfig'));
 
         foreach($rates as $rate) {
-            $method = Mage::getModel('shipping/rate_result_method');
+            if($this->checkRate($rate, $request)) {
+                $method = Mage::getModel('shipping/rate_result_method');
 
-            $method->setCarrier($this->_code);
-            $method->setCarrierTitle($this->getConfigData('title'));
+                $method->setCarrier($this->_code);
+                $method->setCarrierTitle($this->getConfigData('title'));
 
-            //$method->setMethod($this->_code . '_' . $rate['code']);
-            $method->setMethod($rate['code']);
-            $method->setMethodTitle($rate['title']);
+                //$method->setMethod($this->_code . '_' . $rate['code']);
+                $method->setMethod($rate['code']);
+                $method->setMethodTitle($rate['title']);
 
-            $method->setPrice($rate['price']);
+                $method->setPrice($rate['price']);
 
-            $result->append($method);
+                $result->append($method);
+            }
         }
 
         return $result;
