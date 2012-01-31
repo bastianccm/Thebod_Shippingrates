@@ -35,9 +35,10 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
         $html .= '<ul id="shippingconfig_container">';
         $html .= '<li style="width: 500px;">
             <span style="border-left: dotted 1px #888; padding: 0 5px;margin: 0 2px;width: 100px;display: inline-block;">' . $this->__('code') . '</span>
-            <span style="border-left: dotted 1px #888; padding: 0 5px;margin: 0 2px;width: 50px;display: inline-block;">' . $this->__('price') . '</span>
+            <span style="border-left: dotted 1px #888; padding: 0 5px;margin: 0 2px;width: 30px;display: inline-block;">' . $this->__('price') . '</span>
             <span style="border-left: dotted 1px #888; padding: 0 5px;margin: 0 2px;width: 150px;display: inline-block;">' . $this->__('description') . '</span>
             <span style="border-left: dotted 1px #888; padding: 0 5px;margin: 0 2px;width: 100px;display: inline-block;">' . $this->__('notification mail (optional)') . '</span>
+            <span style="border-left: dotted 1px #888; padding: 0 5px;margin: 0 2px;width: 100px;display: inline-block;">' . $this->__('filter') . '</span>
         </li>';
 
         if ($this->_getValue('code')) {
@@ -55,10 +56,12 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
     protected function _getRowTemplateHtml($key = 0) {
         $html = '<li style="display: block; width: 550px;">';
         $html .= '<div style="float: left;">';
-        $html .= '<input class="input-text" style="vertical-align: top; width: 100px; margin: 0 6px;" name="' . $this->getElement()->getName() . '[code][]" value="' . $this->_getValue('code/' . $key) . '" ' . $this->_getDisabled() . ' />';
-        $html .= '<input class="input-text" style="vertical-align: top; width: 50px; margin: 0 6px;" name="' . $this->getElement()->getName() . '[price][]" value="' . $this->_getValue('price/' . $key) . '" ' . $this->_getDisabled() . ' />';
-        $html .= '<textarea onfocus="this.style.height=\'100px\'" onblur="this.style.height=\'16px\'" style="vertical-align: top; width: 150px; margin: 0 6px; height:16px;" name="' . $this->getElement()->getName() . '[description][]" ' . $this->_getDisabled() . '>' . $this->_getValue('description/' . $key) . '</textarea>';
-        $html .= '<input class="input-text" style="vertical-align: top; width: 100px; margin: 0 6px;" name="' . $this->getElement()->getName() . '[email][]" value="' . $this->_getValue('email/' . $key) . '" ' . $this->_getDisabled() . ' />';
+        $html .= '<input class="input-text ' . $this->_getDisabled() . '" style="vertical-align: top; width: 100px; margin: 0 6px;" name="' . $this->getElement()->getName() . '[code][]" value="' . $this->_getValue('code/' . $key) . '"/>';
+        $html .= '<input class="input-text ' . $this->_getDisabled() . '" style="vertical-align: top; width: 30px; margin: 0 6px;" name="' . $this->getElement()->getName() . '[price][]" value="' . $this->_getValue('price/' . $key) . '"/>';
+        $html .= '<textarea onfocus="this.style.height=\'100px\'" onblur="this.style.height=\'16px\'" style="vertical-align: top; width: 150px; margin: 0 6px; height:16px;" name="' . $this->getElement()->getName() . '[description][]" class="' . $this->_getDisabled() . '">' . $this->_getValue('description/' . $key) . '</textarea>';
+        $html .= '<input class="input-text ' . $this->_getDisabled() . '" style="vertical-align: top; width: 100px; margin: 0 6px;" name="' . $this->getElement()->getName() . '[email][]" value="' . $this->_getValue('email/' . $key) . '" />';
+        $html .= '<input style="display: none" name="' . $this->getElement()->getName() . '[filter][]" value="' . $this->_getValue('filter/' . $key) . '"/>';
+        $html .= '<button class="scalable show-hide v-middle ' . $this->_getDisabled() . '" type="button"><span></span></button>&nbsp;';
         $html .= $this->_getRemoveRowButtonHtml();
         $html .= '</div>';
         $html .= '</li>';
@@ -91,8 +94,7 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
         if (!$this->_removeRowButtonHtml) {
             $this->_removeRowButtonHtml = $this->getLayout()->createBlock('adminhtml/widget_button')
                     ->setType('button')
-                    ->setClass('delete v-middle ' . $this->_getDisabled())
-                    ->setLabel($this->__($title))
+                    ->setClass('delete ' . $this->_getDisabled())
                     ->setOnClick("Element.remove($(this).up('" . $selector . "'))")
                     ->setDisabled($this->_getDisabled())
                     ->toHtml();
