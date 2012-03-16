@@ -22,6 +22,6 @@ Screenshots
 # Backend: http://thebod.de/shippingrates2.png
 # Backend filters: http://thebod.de/shippingrates3.png
 
-Licence
+License
 -------
 Licensed under http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0, so feel free to use it anywhere.
