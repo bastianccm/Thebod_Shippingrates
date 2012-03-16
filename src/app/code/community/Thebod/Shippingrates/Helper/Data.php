@@ -18,6 +18,38 @@
  * @author      Bastian Ike <b-ike@b-ike.de>
  * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
  */
-
-class Thebod_Shippingrates_Helper_Data extends Mage_Core_Helper_Abstract {
+class Thebod_Shippingrates_Helper_Data extends Mage_Core_Helper_Abstract
+{
+    /**
+     * Rearranges the complete shipping rates array
+     *
+     * @param array $data array(
+     *     code  => array('', 'a', 'b'),
+     *     price => array('', 10, 20),
+     *     description => array('', 'desc1', 'desc2')
+     * )
+     * @return array array(
+     *     methodid => array(
+     *         code => 'a',
+     *         price => 10,
+     *         description => 'desc1'
+     *     )
+     * )
+     */
+    public function rearrangeShippingRates($data)
+    {
+        $methods = array();
+        foreach ($data as $key => $value) {
+            /*
+             * $methodId => id of this method
+             * $methodValue => value of this entry
+             */
+            foreach ($value as $methodId => $methodValue) {
+                /* we ignore this if $methodId == 0 */
+                if ($methodId) {
+                    $methods[$methodId][$key] = $methodValue;
+                }
+            }
+        }
+    }
 }
