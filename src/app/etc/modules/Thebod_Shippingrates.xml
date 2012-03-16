@@ -4,6 +4,9 @@
         <Thebod_Shippingrates>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+            	<Mage_Shipping />
+            </depends>
         </Thebod_Shippingrates>
     </modules>
 </config>
