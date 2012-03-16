@@ -82,16 +82,14 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                     break;
 
                 case 'min_subtotal':
-                    Mage::getSingleton('checkout/session')->getQuote()->collectTotals();
-                    $subtotal = Mage::getSingleton('checkout/session')->getQuote()->getSubtotal();
+                    $subtotal = $request->getPackageValueWithDiscount();
                     if($subtotal < $value) {
                         $passed = false;
                     }
                     break;
 
                 case 'max_subtotal':
-                    Mage::getSingleton('checkout/session')->getQuote()->collectTotals();
-                    $subtotal = Mage::getSingleton('checkout/session')->getQuote()->getSubtotal();
+                    $subtotal = $request->getPackageValueWithDiscount();
                     if($subtotal > $value) {
                         $passed = false;
                     }
@@ -119,8 +117,7 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
      * @param Mage_Shipping_Model_Rate_Request $request
      * @return Mage_Shipping_Model_Rate_Result
      */
-    public function collectRates(Mage_Shipping_Model_Rate_Request $request)
-    {
+    public function collectRates(Mage_Shipping_Model_Rate_Request $request) {
         if(!$this->getConfigFlag('active')) {
             return false;
         }
