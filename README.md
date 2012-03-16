@@ -18,9 +18,9 @@ http://twitter.com/b_ike
 
 Screenshots
 ----------
-# Frontend: http://thebod.de/shippingrates1.png
-# Backend: http://thebod.de/shippingrates2.png
-# Backend filters: http://thebod.de/shippingrates3.png
+- Frontend: http://thebod.de/shippingrates1.png
+- Backend: http://thebod.de/shippingrates2.png
+- Backend filters: http://thebod.de/shippingrates3.png
 
 License
 -------
