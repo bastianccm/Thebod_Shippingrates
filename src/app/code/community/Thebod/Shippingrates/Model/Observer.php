@@ -16,10 +16,16 @@
  * @package     Thebod_Shippingrates
  * @copyright   Copyright (c) 2012 Bastian Ike (http://thebod.de/)
  * @author      Bastian Ike <b-ike@b-ike.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
  */
+
 class Thebod_Shippingrates_Model_Observer {
-    public function checkout_type_onepage_save_order_after($event) {
+    /**
+     * observer to send mail notification
+     *
+     * @param $event
+     */
+    public function checkoutTypeOnepageSaveOrderAfter($event) {
         $shippingModel = Mage::getModel('shippingrates/email');
         $shippingModel->sendEmailNotification($event->getOrder());
     }

@@ -25,7 +25,7 @@
                     <shippingrates>
                         <type>singleton</type>
                         <class>shippingrates/observer</class>
-                        <method>checkout_type_onepage_save_order_after</method>
+                        <method>checkoutTypeOnepageSaveOrderAfter</method>
                     </shippingrates>
                 </observers>
             </checkout_type_onepage_save_order_after>

@@ -16,13 +16,21 @@
  * @package     Thebod_Shippingrates
  * @copyright   Copyright (c) 2012 Bastian Ike (http://thebod.de/)
  * @author      Bastian Ike <b-ike@b-ike.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
+ * @todo move inline html into templates
  */
+
 class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_System_Config_Form_Field {
 
     protected $_addRowButtonHtml = array();
     protected $_removeRowButtonHtml = array();
 
+    /**
+     * basic template for shipping rates configurator
+     *
+     * @param Varien_Data_Form_Element_Abstract $element
+     * @return string
+     */
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
         $this->setElement($element);
 
@@ -114,6 +122,12 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
         return $html;
     }
 
+    /**
+     * build config line
+     *
+     * @param int $key
+     * @return string
+     */
     protected function _getRowTemplateHtml($key = 0) {
         $html = '<li style="display: block; width: 550px;">';
         $html .= '<div style="float: left;">';
@@ -130,14 +144,33 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
         return $html;
     }
 
+    /**
+     * sets 'disabled' mark for css class
+     *
+     * @return string
+     */
     protected function _getDisabled() {
         return $this->getElement()->getDisabled() ? ' disabled' : '';
     }
 
+    /**
+     * config value getter
+     *
+     * @param string $key
+     * @return string
+     */
     protected function _getValue($key) {
         return $this->getElement()->getData('value/' . $key);
     }
 
+    /**
+     * returns 'add' button html code
+     *
+     * @param $container
+     * @param $template
+     * @param string $title
+     * @return string
+     */
     protected function _getAddRowButtonHtml($container, $template, $title = 'Add') {
         if (!isset($this->_addRowButtonHtml[$container])) {
             $this->_addRowButtonHtml[$container] = $this->getLayout()->createBlock('adminhtml/widget_button')
@@ -151,6 +184,13 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
         return $this->_addRowButtonHtml[$container];
     }
 
+    /**
+     * returns 'delete' button html code
+     *
+     * @param string $selector
+     * @param string $title
+     * @return array
+     */
     protected function _getRemoveRowButtonHtml($selector = 'li', $title = 'Delete') {
         if (!$this->_removeRowButtonHtml) {
             $this->_removeRowButtonHtml = $this->getLayout()->createBlock('adminhtml/widget_button')

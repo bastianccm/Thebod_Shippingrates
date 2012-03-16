@@ -16,18 +16,27 @@
  * @package     Thebod_Shippingrates
  * @copyright   Copyright (c) 2012 Bastian Ike (http://thebod.de/)
  * @author      Bastian Ike <b-ike@b-ike.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
  */
+
 class Thebod_Shippingrates_Model_Email extends Mage_Core_Model_Abstract {
     /* code based on Mage_Sales_Model_Order::sendNewOrderEmail() */
+    /**
+     * sends notification mail for selected shipping rate
+     *
+     * @param Mage_Sales_Model_Order $order
+     * @return boolean
+     * @throws Exception
+     * @see Mage_Sales_Model_Order
+     */
     public function sendEmailNotification($order) {
         if(strncmp($order->getShippingMethod(), 'shippingrates_', 14) != 0) {
-            return;
+            return false;
         }
 
         $notificationMail = $order->getShippingCarrier()->getNotificationMail($order->getShippingMethod());
         if(!strlen(trim($notificationMail))) {
-            return;
+            return false;
         }
 
         $storeId = $order->getStore()->getId();
@@ -78,5 +87,7 @@ class Thebod_Shippingrates_Model_Email extends Mage_Core_Model_Abstract {
             )
         );
         $mailer->send();
+
+        return true;
     }
 }

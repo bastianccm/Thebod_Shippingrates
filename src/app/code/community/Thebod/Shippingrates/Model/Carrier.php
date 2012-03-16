@@ -16,8 +16,9 @@
  * @package     Thebod_Shippingrates
  * @copyright   Copyright (c) 2012 Bastian Ike (http://thebod.de/)
  * @author      Bastian Ike <b-ike@b-ike.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
  */
+
 class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abstract {
     protected $_code = 'shippingrates';
 
@@ -34,8 +35,9 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
             $data = unserialize(base64_decode($data));
         }
 
+        /* searches correct mail address */
         foreach($data['code'] as $k => $v) {
-            if($this->_code . '_' . $v == $code) {
+            if(($this->_code . '_' . $v) == $code) {
                 return $data['email'][$k];
             }
         }
@@ -57,12 +59,12 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
             return true;
         }
 
-        $filter = explode(';', $rate['filter']);
+        $filters = explode(';', $rate['filter']);
         $passed = true;
-        foreach($filter as $f) {
-            $f = explode(':', $f);
-            $condition = $f[0];
-            $value = isset($f[1]) && $f[1] ? $f[1] : false;
+        foreach($filters as $filter) {
+            $filter = explode(':', $filter);
+            $condition = $filter[0];
+            $value = isset($filter[1]) && $filter[1] ? $filter[1] : false;
 
             if($value === false) {
                 continue;
@@ -82,15 +84,13 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                     break;
 
                 case 'min_subtotal':
-                    $subtotal = $request->getPackageValueWithDiscount();
-                    if($subtotal < $value) {
+                    if($request->getPackageValueWithDiscount() < $value) {
                         $passed = false;
                     }
                     break;
 
                 case 'max_subtotal':
-                    $subtotal = $request->getPackageValueWithDiscount();
-                    if($subtotal > $value) {
+                    if($request->getPackageValueWithDiscount() > $value) {
                         $passed = false;
                     }
                     break;
@@ -108,6 +108,7 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                     break;
             }
         }
+
         return $passed;
     }
 
@@ -124,7 +125,7 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
 
         $result = Mage::getModel('shipping/rate_result');
 
-        $rates = $this->getRate($this->getConfigData('shippingconfig'));
+        $rates = $this->getRates($this->getConfigData('shippingconfig'));
 
         foreach($rates as $rate) {
             if($this->checkRate($rate, $request)) {
@@ -152,7 +153,7 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
      * @param Mage_Shipping_Model_Rate_Request $data
      * @return array
      */
-    public function getRate($data) {
+    public function getRates($data) {
         $rates = array();
         $methods = array();
 
@@ -179,8 +180,6 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
             $price = trim($method['price']);
             $filter = trim($method['filter']);
             $title = nl2br(trim($method['description']));
-
-            $title = str_replace(array('=>', '<='), array('<strong>', '</strong>'), $title);
 
             $rates[] = array(
                 'code' => $code,
