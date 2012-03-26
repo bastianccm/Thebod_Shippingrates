@@ -17,21 +17,29 @@
  * @copyright   Copyright (c) 2012 Bastian Ike (http://thebod.de/)
  * @author      Bastian Ike <b-ike@b-ike.de>
  * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
- * @todo move inline html into templates
  */
-
-class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_System_Config_Form_Field {
-
+class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_System_Config_Form_Field
+{
+    /**
+     * @var array Add buttons
+     */
     protected $_addRowButtonHtml = array();
+
+    /**
+     * @var array Remove buttons
+     */
     protected $_removeRowButtonHtml = array();
 
     /**
      * basic template for shipping rates configurator
      *
+     * @todo move inline html into templates
+     *
      * @param Varien_Data_Form_Element_Abstract $element
      * @return string
      */
-    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
+    protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element)
+    {
         $this->setElement($element);
 
         $html = '<div id="shippingconfig_template" style="display:none">';
@@ -132,7 +140,8 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
      * @param int $key
      * @return string
      */
-    protected function _getRowTemplateHtml($key = 0) {
+    protected function _getRowTemplateHtml($key = 0)
+    {
         $html = '<li style="display: block; width: 550px;">';
         $html .= '<div style="float: left;">';
         $html .= '<input class="name input-text ' . $this->_getDisabled() . '" style="vertical-align: top; width: 100px; margin: 0 6px;" name="' . $this->getElement()->getName() . '[code][]" value="' . $this->_getValue('code/' . $key) . '"/>';
@@ -153,7 +162,8 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
      *
      * @return string
      */
-    protected function _getDisabled() {
+    protected function _getDisabled()
+    {
         return $this->getElement()->getDisabled() ? ' disabled' : '';
     }
 
@@ -163,27 +173,29 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
      * @param string $key
      * @return string
      */
-    protected function _getValue($key) {
+    protected function _getValue($key)
+    {
         return $this->getElement()->getData('value/' . $key);
     }
 
     /**
      * returns 'add' button html code
      *
-     * @param $container
-     * @param $template
+     * @param string $container
+     * @param string $template
      * @param string $title
      * @return string
      */
-    protected function _getAddRowButtonHtml($container, $template, $title = 'Add') {
+    protected function _getAddRowButtonHtml($container, $template, $title = 'Add')
+    {
         if (!isset($this->_addRowButtonHtml[$container])) {
             $this->_addRowButtonHtml[$container] = $this->getLayout()->createBlock('adminhtml/widget_button')
-                    ->setType('button')
-                    ->setClass('add ' . $this->_getDisabled())
-                    ->setLabel($this->__($title))
-                    ->setOnClick("Element.insert($('" . $container . "'), {bottom: $('" . $template . "').innerHTML})")
-                    ->setDisabled($this->_getDisabled())
-                    ->toHtml();
+                ->setType('button')
+                ->setClass('add ' . $this->_getDisabled())
+                ->setLabel($this->__($title))
+                ->setOnClick("Element.insert($('" . $container . "'), {bottom: $('" . $template . "').innerHTML})")
+                ->setDisabled($this->_getDisabled())
+                ->toHtml();
         }
         return $this->_addRowButtonHtml[$container];
     }
@@ -195,16 +207,16 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
      * @param string $title
      * @return array
      */
-    protected function _getRemoveRowButtonHtml($selector = 'li', $title = 'Delete') {
+    protected function _getRemoveRowButtonHtml($selector = 'li', $title = 'Delete')
+    {
         if (!$this->_removeRowButtonHtml) {
             $this->_removeRowButtonHtml = $this->getLayout()->createBlock('adminhtml/widget_button')
-                    ->setType('button')
-                    ->setClass('delete ' . $this->_getDisabled())
-                    ->setOnClick("Element.remove($(this).up('" . $selector . "'))")
-                    ->setDisabled($this->_getDisabled())
-                    ->toHtml();
+                ->setType('button')
+                ->setClass('delete ' . $this->_getDisabled())
+                ->setOnClick("Element.remove($(this).up('" . $selector . "'))")
+                ->setDisabled($this->_getDisabled())
+                ->toHtml();
         }
         return $this->_removeRowButtonHtml;
     }
-
 }

@@ -18,24 +18,26 @@
  * @author      Bastian Ike <b-ike@b-ike.de>
  * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
  */
-
-class Thebod_Shippingrates_Model_Email extends Mage_Core_Model_Abstract {
-    /* code based on Mage_Sales_Model_Order::sendNewOrderEmail() */
+class Thebod_Shippingrates_Model_Email extends Mage_Core_Model_Abstract
+{
     /**
-     * sends notification mail for selected shipping rate
+     * Sends notification mail for selected shipping rate
+     *
+     * The code for this functionality is based on Mage_Sales_Model_Order::sendNewOrderEmail()
      *
      * @param Mage_Sales_Model_Order $order
      * @return boolean
      * @throws Exception
      * @see Mage_Sales_Model_Order
      */
-    public function sendEmailNotification($order) {
-        if(strncmp($order->getShippingMethod(), 'shippingrates_', 14) != 0) {
+    public function sendEmailNotification($order)
+    {
+        if (strncmp($order->getShippingMethod(), 'shippingrates_', 14) != 0) {
             return false;
         }
 
         $notificationMail = $order->getShippingCarrier()->getNotificationMail($order->getShippingMethod());
-        if(!strlen(trim($notificationMail))) {
+        if (!strlen(trim($notificationMail))) {
             return false;
         }
 
@@ -80,7 +82,8 @@ class Thebod_Shippingrates_Model_Email extends Mage_Core_Model_Abstract {
         $mailer->setSender(Mage::getStoreConfig(Mage_Sales_Model_Order::XML_PATH_EMAIL_IDENTITY, $storeId));
         $mailer->setStoreId($storeId);
         $mailer->setTemplateId($templateId);
-        $mailer->setTemplateParams(array(
+        $mailer->setTemplateParams(
+            array(
                 'order'        => $order,
                 'billing'      => $order->getBillingAddress(),
                 'payment_html' => $paymentBlockHtml

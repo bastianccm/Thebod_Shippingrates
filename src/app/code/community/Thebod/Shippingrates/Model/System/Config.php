@@ -16,14 +16,17 @@
  * @package     Thebod_Shippingrates
  * @copyright   Copyright (c) 2012 Bastian Ike (http://thebod.de/)
  * @author      Bastian Ike <b-ike@b-ike.de>
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
  */
-class Thebod_Shippingrates_Model_System_Config extends Mage_Core_Model_Config_Data {
-
+class Thebod_Shippingrates_Model_System_Config extends Mage_Core_Model_Config_Data
+{
     /**
      * serializes array before saving
+     *
+     * @return void
      */
-    protected function _beforeSave() {
+    protected function _beforeSave()
+    {
         if (is_array($this->getValue())) {
             $this->setValue(base64_encode(serialize($this->getValue())));
         }
@@ -31,9 +34,12 @@ class Thebod_Shippingrates_Model_System_Config extends Mage_Core_Model_Config_Da
 
     /**
      * unserializes array after loading
+     *
+     * @return void
      */
-    protected function _afterLoad() {
-        if(!is_array($this->getValue())) {
+    protected function _afterLoad()
+    {
+        if (!is_array($this->getValue())) {
             $value = $this->getValue();
             $this->setValue(empty($value) ? false : unserialize(base64_decode($value)));
         }

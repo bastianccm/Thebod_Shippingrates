@@ -18,15 +18,18 @@
  * @author      Bastian Ike <b-ike@b-ike.de>
  * @license     http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0
  */
-
-class Thebod_Shippingrates_Model_Observer {
+class Thebod_Shippingrates_Model_Observer
+{
     /**
      * observer to send mail notification
      *
-     * @param $event
+     * @param Varien_Event_Observer $observer
+     * @return void
      */
-    public function checkoutTypeOnepageSaveOrderAfter($event) {
+    public function checkoutTypeOnepageSaveOrderAfter(Varien_Event_Observer $observer)
+    {
+        /* @var $shippingModel Thebod_Shippingrates_Model_Email */
         $shippingModel = Mage::getModel('shippingrates/email');
-        $shippingModel->sendEmailNotification($event->getOrder());
+        $shippingModel->sendEmailNotification($observer->getOrder());
     }
 }
