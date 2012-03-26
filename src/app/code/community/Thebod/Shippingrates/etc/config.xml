@@ -29,6 +29,16 @@
                     </shippingrates>
                 </observers>
             </checkout_type_onepage_save_order_after>
+
+             <payment_method_is_active>
+                 <observers>
+                     <shippingrates>
+                         <type>singleton</type>
+                         <class>shippingrates/observer</class>
+                         <method>paymentMethodIsActive</method>
+                     </shippingrates>
+                 </observers>
+             </payment_method_is_active>
         </events>
     </global>
 

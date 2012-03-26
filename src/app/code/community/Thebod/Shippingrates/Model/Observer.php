@@ -32,4 +32,66 @@ class Thebod_Shippingrates_Model_Observer
         $shippingModel = Mage::getModel('shippingrates/email');
         $shippingModel->sendEmailNotification($observer->getOrder());
     }
+
+    /**
+     * check payment filters
+     *
+     * @param Varien_Event_Observer $observer
+     * @return void
+     */
+    public function paymentMethodIsActive(Varien_Event_Observer $observer)
+    {
+        if (!Mage::getSingleton('checkout/session')->hasQuote()) {
+            return;
+        }
+
+        $shippingMethod = explode('_', $this->_getShippingMethod());
+        $shippingConfig = $this->_getShippingConfig();
+
+        $shippingCarrier = array_shift($shippingMethod);
+        $shippingCode = implode('_', $shippingMethod);
+
+        if ($shippingCarrier != 'shippingrates') {
+            return;
+        }
+
+        $configKey = -1;
+        foreach ($shippingConfig['code'] as $k => $v) {
+            if($v == $shippingCode) {
+                $configKey = $k;
+            }
+        }
+        if ($configKey == -1) {
+            return;
+        }
+
+        $checkResult = $observer->getEvent()->getResult();
+        $method = $observer->getEvent()->getMethodInstance();
+
+        $filter = explode(';', $shippingConfig['filter'][$configKey]);
+        foreach ($filter as $k => $v) {
+            $v = explode(':', $v);
+            if (($v[0] == 'payment') && !in_array($method->getCode(), explode(',', $v[1]))) {
+                $checkResult->isAvailable = false;
+            }
+        }
+    }
+
+    /**
+     * @return Mage_Shipping_Model_Carrier_Abstract
+     */
+    protected function _getShippingMethod()
+    {
+        return Mage::getSingleton('checkout/session')->getQuote()->getShippingAddress()->getShippingMethod();
+    }
+
+    /**
+     * @return string
+     */
+    protected function _getShippingConfig()
+    {
+        $path = 'carriers/shippingrates/shippingconfig';
+
+        return Mage::getStoreConfig($path, Mage::app()->getStore());
+    }
 }
