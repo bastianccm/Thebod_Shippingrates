@@ -71,7 +71,7 @@ class Thebod_Shippingrates_Model_Observer
         $filter = explode(';', $shippingConfig['filter'][$configKey]);
         foreach ($filter as $k => $v) {
             $v = explode(':', $v);
-            if (($v[0] == 'payment') && !in_array($method->getCode(), explode(',', $v[1]))) {
+            if (isset($v[1]) && ($v[0] == 'payment') && !in_array($method->getCode(), explode(',', $v[1]))) {
                 $checkResult->isAvailable = false;
             }
         }
@@ -92,6 +92,6 @@ class Thebod_Shippingrates_Model_Observer
     {
         $path = 'carriers/shippingrates/shippingconfig';
 
-        return Mage::getStoreConfig($path, Mage::app()->getStore());
+        return unserialize(base64_decode(Mage::getStoreConfig($path, Mage::app()->getStore())));
     }
 }
