@@ -48,7 +48,7 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
                     filter_btn = btn;
                     $(\'shippingconfig_filter_name\').update($(btn).up(1).down(\'.name\').value);
                     if($(btn).up(1).down(\'.filter\').value == \'\') {
-                        $(btn).up(1).down(\'.filter\').value = \'min_qty:;max_qty:;min_subtotal:;max_subtotal:;min_weight:;max_weight:;\';
+                        $(btn).up(1).down(\'.filter\').value = \'min_qty:;max_qty:;min_subtotal:;max_subtotal:;min_weight:;max_weight:;countries:;\';
                     }
 
                     filter = $(btn).up(1).down(\'.filter\').value.split(\';\').each(function(e,i) {
@@ -70,6 +70,7 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
                     filter += \'max_subtotal:\' + $(\'shippingconfig_filter_max_subtotal\').value + \';\';
                     filter += \'min_weight:\' + $(\'shippingconfig_filter_min_weight\').value + \';\';
                     filter += \'max_weight:\' + $(\'shippingconfig_filter_max_weight\').value + \';\';
+                    filter += \'countries:\' + $(\'shippingconfig_filter_countries\').value + \';\';
 
                     $(btn).up(1).down(\'.filter\').value = filter;
 
@@ -91,6 +92,9 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
                 <tr>
                     <td>' . $this->__('min. weight:') . '</td><td><input class="input-text" style="width: 100px;" id="shippingconfig_filter_min_weight"/></td>
                     <td>' . $this->__('max. weight:') . '</td><td><input class="input-text" style="width: 100px;" id="shippingconfig_filter_max_weight"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2">' . $this->__('limit to countries: (2-characters, comma-separated, e.g. "DE" or "DE,AT,CH")') . '</td><td colspan="2"><input class="input-text" style="width: 100px;" id="shippingconfig_filter_countries"/></td>
                 </tr>
                 </table>
                 <div style="text-align: right;">
