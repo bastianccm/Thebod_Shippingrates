@@ -125,7 +125,7 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                         $allowed[$k] = trim($v);
                     }
 
-                    if ($exlude) {
+                    if ($exclude) {
                         if (in_array($dest, $allowed) && count($allowed)) {
                             $passed = false;
                         }
