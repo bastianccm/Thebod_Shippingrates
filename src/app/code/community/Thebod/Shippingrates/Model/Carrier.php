@@ -134,11 +134,9 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                             $passed = false;
                         }
                     }
-
                     break;
             }
         }
-
         return $passed;
     }
 
