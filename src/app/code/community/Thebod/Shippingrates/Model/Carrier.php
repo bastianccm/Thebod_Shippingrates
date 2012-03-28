@@ -114,13 +114,27 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
 
                 case 'countries':
                     $dest = strtolower($request->getDestCountryId());
+                    if ($value[0] == '!') {
+                        $exclude = true;
+                        $value[0] = ' ';   // will be removed with trim() ;-)
+                    } else {
+                        $exclude = false;
+                    }
                     $allowed = explode(',', strtolower($value));
-                    foreach($allowed as $k => $v) {
+                    foreach ($allowed as $k => $v) {
                         $allowed[$k] = trim($v);
                     }
-                    if(!in_array($dest, $allowed) && count($allowed)) {
-                        $passed = false;
+
+                    if ($exclude) {
+                        if (in_array($dest, $allowed) && count($allowed)) {
+                            $passed = false;
+                        }
+                    } else {
+                        if (!in_array($dest, $allowed) && count($allowed)) {
+                            $passed = false;
+                        }
                     }
+
                     break;
             }
         }

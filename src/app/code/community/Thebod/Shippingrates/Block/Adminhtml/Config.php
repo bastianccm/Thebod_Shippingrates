@@ -103,7 +103,7 @@ class Thebod_Shippingrates_Block_Adminhtml_Config extends Mage_Adminhtml_Block_S
                     <td>' . $this->__('max. weight:') . '</td><td><input class="input-text" style="width: 100px;" id="shippingconfig_filter_max_weight"/></td>
                 </tr>
                 <tr>
-                    <td colspan="2">' . $this->__('limit to countries: (2-characters, comma-separated, e.g. "DE" or "DE,AT,CH")') . '</td><td colspan="2"><input class="input-text" style="width: 100px;" id="shippingconfig_filter_countries"/></td>
+                    <td colspan="2">' . $this->__('limit to countries: (2-characters, comma-separated, e.g. "DE" or "DE,AT,CH"). Use ! as first character to exclude from specified countries.') . '</td><td colspan="2"><input class="input-text" style="width: 100px;" id="shippingconfig_filter_countries"/></td>
                 </tr>
                 <tr>
                     <td colspan="2">' . $this->__('limit payment methods: (payment method code, comma-separated, e.g. "checkmo")') . '</td><td colspan="2"><input class="input-text" style="width: 100px;" id="shippingconfig_filter_payment"/></td>
