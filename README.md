@@ -28,6 +28,13 @@ Licensed under http://creativecommons.org/licenses/by/3.0/ CC-BY 3.0, so feel fr
 
 Changelog
 ---------
+1.0.5:
+- Extended payment filters (supports country exclude)
+- Added payment filters (limit to specified payment methods)
+
+1.0.4:
+- Bugfix
+
 1.0.3:
 - Added country filter
 
