@@ -71,7 +71,7 @@ class Thebod_Shippingrates_Model_Observer
         $filter = explode(';', $shippingConfig['filter'][$configKey]);
         foreach ($filter as $k => $v) {
             $v = explode(':', $v);
-            if (isset($v[1]) && ($v[0] == 'payment') && !in_array($method->getCode(), explode(',', $v[1]))) {
+            if (isset($v[1]) && strlen($v[1]) && ($v[0] == 'payment') && !in_array($method->getCode(), explode(',', $v[1]))) {
                 $checkResult->isAvailable = false;
             }
         }
