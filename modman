@@ -1,5 +1,3 @@
-
-
 src/app/etc/modules/Thebod_Shippingrates.xml app/etc/modules/Thebod_Shippingrates.xml
 src/app/locale/de_DE/Thebod_Shippingrates.csv app/locale/de_DE/Thebod_Shippingrates.csv
 src/app/code/community/Thebod/Shippingrates app/code/community/Thebod/Shippingrates

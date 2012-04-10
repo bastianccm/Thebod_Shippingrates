@@ -56,7 +56,7 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
      */
     public function checkRate(array $rate, Mage_Shipping_Model_Rate_Request $request)
     {
-        if (!Mage::getSingleton('checkout/session')->hasQuote()) {
+        if (!Mage::getSingleton('checkout/session')->getQuoteId()) {
             return true;
         }
 
