@@ -217,4 +217,14 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
         );
         return $allowedMethods;
     }
+
+    public function isActive()
+    {
+        $data = unserialize(base64_decode($this->getConfigData('shippingconfig')));
+
+        if (!$data) {
+            return false;
+        }
+        return parent::isActive();
+    }
 }
