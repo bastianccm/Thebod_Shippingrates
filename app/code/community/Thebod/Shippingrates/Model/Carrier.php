@@ -75,6 +75,12 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                 continue;
             }
 
+            if($this->getConfigData('with_tax')) {
+                $packageValue = $request->getBaseSubtotalInclTax();
+            } else {
+                $packageValue= $request->getPackageValueWithDiscount();
+            }
+
             switch ($condition) {
                 case 'min_qty':
                     if ($request->getPackageQty() < $value) {
@@ -89,13 +95,13 @@ class Thebod_Shippingrates_Model_Carrier extends Mage_Shipping_Model_Carrier_Abs
                     break;
 
                 case 'min_subtotal':
-                    if ($request->getPackageValueWithDiscount() < $value) {
+                    if ($packageValue < $value) {
                         $passed = false;
                     }
                     break;
 
                 case 'max_subtotal':
-                    if ($request->getPackageValueWithDiscount() > $value) {
+                    if ($packageValue > $value) {
                         $passed = false;
                     }
                     break;
