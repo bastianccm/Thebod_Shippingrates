@@ -20,3 +20,5 @@
 "min. weight","min. Gewicht"
 "max. weight","max. Gewicht"
 "save filter","Filter speichern"
+"Subtotal including tax","Zwischensumme inkl. Steuer"
+"Use subtotal with or without tax to compare with min./max. subtotal filters","Zwischensumme exkl./inkl. Steuer um es mit den Filtern (subtotal min./max.) zu vergleichen"
